@@ -24,17 +24,18 @@ import io.github.ydwk.ydwk.BotBuilder
 import io.github.ydwk.ydwk.YDWK
 import io.github.ydwk.ydwk.evm.backend.event.on
 import io.github.ydwk.ydwk.evm.event.events.gateway.ReadyEvent
+import io.github.ydwk.ydwk.impl.YDWKImpl
 import org.slf4j.LoggerFactory
 
 val config = JConfigBuilder().build()
 
 fun main() {
-    val logger = LoggerFactory.getLogger("YDB")
-
     val ydkw: YDWK =
         BotBuilder.createDefaultBot(
                 config["token"]?.asString ?: throw JConfigException("Token not found"))
             .build()
+
+    val logger = (ydkw as YDWKImpl).logger
 
     ydkw.on<ReadyEvent> {
         logger.info("Logged in as ${it.ydwk.bot?.name}")

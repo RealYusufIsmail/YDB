@@ -18,16 +18,23 @@
  */ 
 package io.github.realyusufismail
 
+import io.github.realyusufismail.Bot.Companion.logger
 import io.github.realyusufismail.jconfig.classes.JConfigBuilder
 import io.github.realyusufismail.jconfig.classes.JConfigException
 import io.github.ydwk.ydwk.BotBuilder
 import io.github.ydwk.ydwk.YDWK
 import io.github.ydwk.ydwk.evm.backend.event.on
 import io.github.ydwk.ydwk.evm.event.events.gateway.ReadyEvent
-import io.github.ydwk.ydwk.impl.YDWKImpl
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 val config = JConfigBuilder().build()
+
+class Bot() {
+    companion object {
+        val logger: Logger = LoggerFactory.getLogger(Bot::class.java)
+    }
+}
 
 fun main() {
     val ydkw: YDWK =
@@ -35,9 +42,5 @@ fun main() {
                 config["token"]?.asString ?: throw JConfigException("Token not found"))
             .build()
 
-    val logger = (ydkw as YDWKImpl).logger
-
-    ydkw.on<ReadyEvent> {
-        logger.info("Logged in as ${it.ydwk.bot?.name}")
-    }
+    ydkw.on<ReadyEvent> { logger.info("Logged in as ${it.ydwk.bot?.name}") }
 }

@@ -23,7 +23,7 @@ import io.github.ydwk.ydwk.YDWK
 import io.github.ydwk.ydwk.evm.event.events.interaction.SlashCommandEvent
 import io.github.ydwk.ydwk.slash.Slash
 
-class SlashHandler(private val ydwk: YDWK) : BaseHandler() {
+open class SlashHandler(private val ydwk: YDWK) : BaseHandler() {
     private val slashCommand: MutableMap<String, SlashCommandExtender> = HashMap()
     private val slashMutableList: MutableList<Slash> = ArrayList()
 

@@ -16,20 +16,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */ 
-package io.github.realyusufismail.reg
+package io.github.realyusufismail.commands
 
+import io.github.realyusufismail.backend.builder.slash.SlashCommandBuilder
+import io.github.realyusufismail.backend.builder.slash.SlashCommandFinaliser
 import io.github.realyusufismail.backend.extension.SlashCommandExtender
-import io.github.realyusufismail.backend.handler.SlashHandler
-import io.github.realyusufismail.commands.UptimeCommand
-import io.github.ydwk.ydwk.YDWK
+import io.github.ydwk.ydwk.interaction.application.SlashCommand
 
-class SlashCommandReg(ydwk: YDWK) : SlashHandler(ydwk) {
+class UptimeCommand : SlashCommandExtender {
+    override fun onSlashCommand(event: SlashCommand) {
+        event.reply("The uptime is ${event.ydwk.uptime}ms")
+    }
 
-    init {
-        val slashList: MutableList<SlashCommandExtender> = ArrayList()
-
-        slashList.add(UptimeCommand())
-
-        registerSlashCommands(slashList)
+    override fun build(): SlashCommandFinaliser {
+        return SlashCommandBuilder("uptime", "Get the uptime of the bot").build()
     }
 }

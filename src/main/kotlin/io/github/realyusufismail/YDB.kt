@@ -21,6 +21,7 @@ package io.github.realyusufismail
 import io.github.realyusufismail.Bot.Companion.logger
 import io.github.realyusufismail.jconfig.classes.JConfigBuilder
 import io.github.realyusufismail.jconfig.classes.JConfigException
+import io.github.realyusufismail.reg.SlashCommandReg
 import io.github.ydwk.ydwk.BotBuilder
 import io.github.ydwk.ydwk.UserStatus
 import io.github.ydwk.ydwk.YDWK
@@ -38,11 +39,13 @@ class Bot() {
 }
 
 fun main() {
-    val ydkw: YDWK =
+    val ydwk: YDWK =
         BotBuilder.createDefaultBot(
                 config["token"]?.asString ?: throw JConfigException("Token not found"))
             .setUserStatus(UserStatus.DND)
             .build()
 
-    ydkw.on<ReadyEvent> { logger.info("Logged in as ${it.ydwk.bot?.name}") }
+    ydwk.on<ReadyEvent> { logger.info("Logged in as ${it.ydwk.bot?.name}") }
+
+    ydwk.addEvent(SlashCommandReg(ydwk))
 }

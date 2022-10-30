@@ -28,12 +28,14 @@ class SlashCommandBuilder(
 ) {
     var options: MutableList<SlashOption> = mutableListOf()
 
-    fun addOption(option: SlashOption) {
+    fun addOption(option: SlashOption): SlashCommandBuilder {
         options.add(option)
+        return this
     }
 
-    fun addOptions(options: List<SlashOption>) {
+    fun addOptions(options: List<SlashOption>): SlashCommandBuilder {
         this.options.addAll(options)
+        return this
     }
 
     fun build(): SlashCommandFinaliser {

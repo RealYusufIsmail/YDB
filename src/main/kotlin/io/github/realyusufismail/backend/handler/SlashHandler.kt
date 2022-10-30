@@ -33,13 +33,7 @@ open class SlashHandler(private val ydwk: YDWK) : BaseHandler() {
 
     private fun addSlashCommands(command: SlashCommandExtender) {
         slashCommand[command.build().slash.name] = command
-        if (command.build().isGuildOnly) {
-            slashMutableList.add(
-                Slash(command.build().slash.name, command.build().slash.description, true))
-        } else {
-            slashMutableList.add(
-                Slash(command.build().slash.name, command.build().slash.description, false))
-        }
+        slashMutableList.add(command.build().slash)
     }
 
     fun registerSlashCommands(slashCommands: Collection<SlashCommandExtender>) {
@@ -57,6 +51,6 @@ open class SlashHandler(private val ydwk: YDWK) : BaseHandler() {
 
     override fun onSlashCommand(event: SlashCommandEvent) {
         val cmd: SlashCommandExtender = slashCommand[event.slash.name] ?: return
-        cmd.onSlashCommand(event)
+        cmd.onSlashCommand(event.slash)
     }
 }

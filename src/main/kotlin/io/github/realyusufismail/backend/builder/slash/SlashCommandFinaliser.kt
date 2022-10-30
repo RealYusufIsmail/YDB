@@ -21,24 +21,17 @@ package io.github.realyusufismail.backend.builder.slash
 import io.github.realyusufismail.backend.type.CommandType
 import io.github.ydwk.ydwk.slash.Slash
 
-class SlashCommand(val slash: Slash) {
-    var isGuildOnly = false
-        private set
+class SlashCommandFinaliser(val slash: Slash) {
     var isOwnerOnly = false
         private set
     private var commandType: CommandType? = null
 
-    fun setToOwnerOnly(): SlashCommand {
+    fun setToOwnerOnly(): SlashCommandFinaliser {
         isOwnerOnly = true
         return this
     }
 
-    fun setToGuildOnly(): SlashCommand {
-        isGuildOnly = true
-        return this
-    }
-
-    fun setCommandType(commandType: CommandType?): SlashCommand {
+    fun setCommandType(commandType: CommandType?): SlashCommandFinaliser {
         this.commandType = commandType
         return this
     }

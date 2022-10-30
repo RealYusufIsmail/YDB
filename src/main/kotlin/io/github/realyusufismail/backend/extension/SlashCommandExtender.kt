@@ -18,12 +18,12 @@
  */ 
 package io.github.realyusufismail.backend.extension
 
-import io.github.realyusufismail.backend.builder.slash.SlashCommand
-import io.github.ydwk.ydwk.evm.event.events.interaction.SlashCommandEvent
+import io.github.realyusufismail.backend.builder.slash.SlashCommandFinaliser
+import io.github.ydwk.ydwk.interaction.application.SlashCommand
 
 interface SlashCommandExtender {
     // This method is called when the command is executed.
-    fun onSlashCommand(event: SlashCommandEvent)
+    fun onSlashCommand(event: SlashCommand)
 
-    fun build(): SlashCommand
+    fun build(): SlashCommandFinaliser
 }

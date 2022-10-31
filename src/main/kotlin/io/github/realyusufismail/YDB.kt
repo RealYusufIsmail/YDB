@@ -22,6 +22,7 @@ import io.github.realyusufismail.Bot.Companion.logger
 import io.github.realyusufismail.jconfig.classes.JConfigBuilder
 import io.github.realyusufismail.jconfig.classes.JConfigException
 import io.github.realyusufismail.reg.SlashCommandReg
+import io.github.ydwk.ydwk.Activity
 import io.github.ydwk.ydwk.BotBuilder
 import io.github.ydwk.ydwk.UserStatus
 import io.github.ydwk.ydwk.YDWK
@@ -43,6 +44,7 @@ fun main() {
         BotBuilder.createDefaultBot(
                 config["token"]?.asString ?: throw JConfigException("Token not found"))
             .setUserStatus(UserStatus.DND)
+            .setActivity(Activity.playing("with YDWK"))
             .build()
 
     ydwk.on<ReadyEvent> { logger.info("Logged in as ${it.ydwk.bot?.name}") }

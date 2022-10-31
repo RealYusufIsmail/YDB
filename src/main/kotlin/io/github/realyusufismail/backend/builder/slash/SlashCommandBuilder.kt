@@ -24,7 +24,8 @@ import io.github.ydwk.ydwk.slash.SlashOption
 class SlashCommandBuilder(
     val name: String,
     val description: String,
-    val guildOnly: Boolean = false
+    val specificServerOnlyCommand: Boolean = false,
+    val guildOnlyCommand: Boolean = false
 ) {
     var options: MutableList<SlashOption> = mutableListOf()
 
@@ -43,7 +44,9 @@ class SlashCommandBuilder(
             require(options.size <= 25) { "Cannot have more than 25 options" }
         }
 
-        val cm = Slash(name, description, guildOnly).addOptions(options)
+        val cm =
+            Slash(name, description, guildOnlyCommand, specificServerOnlyCommand)
+                .addOptions(options)
 
         return SlashCommandFinaliser(cm)
     }

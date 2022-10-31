@@ -22,6 +22,7 @@ import io.github.realyusufismail.backend.builder.slash.SlashCommandBuilder
 import io.github.realyusufismail.backend.builder.slash.SlashCommandFinaliser
 import io.github.realyusufismail.backend.extension.SlashCommandExtender
 import io.github.ydwk.ydwk.entities.User
+import io.github.ydwk.ydwk.entities.guild.enums.GuildPermission
 import io.github.ydwk.ydwk.interaction.application.SlashCommand
 import io.github.ydwk.ydwk.slash.SlashOption
 import io.github.ydwk.ydwk.slash.SlashOptionType
@@ -37,6 +38,16 @@ class BanCommand : SlashCommandExtender {
 
         if (guild == null) {
             event.reply("This command can only be used in a guild").get()
+            return
+        }
+
+        if (!event.member!!.hasPermission(GuildPermission.BAN_MEMBERS)) {
+            event.reply("You don't have permission to ban members").get()
+            return
+        }
+
+        if (!guild.botAsMember.hasPermission(GuildPermission.BAN_MEMBERS)) {
+            event.reply("I don't have permission to ban members").get()
             return
         }
 

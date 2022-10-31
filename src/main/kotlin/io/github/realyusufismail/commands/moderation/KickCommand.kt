@@ -21,17 +21,15 @@ package io.github.realyusufismail.commands.moderation
 import io.github.realyusufismail.backend.builder.slash.SlashCommandBuilder
 import io.github.realyusufismail.backend.builder.slash.SlashCommandFinaliser
 import io.github.realyusufismail.backend.extension.SlashCommandExtender
-import io.github.ydwk.ydwk.entities.User
+import io.github.ydwk.ydwk.entities.guild.Member
 import io.github.ydwk.ydwk.entities.guild.enums.GuildPermission
 import io.github.ydwk.ydwk.interaction.application.SlashCommand
 import io.github.ydwk.ydwk.slash.SlashOption
 import io.github.ydwk.ydwk.slash.SlashOptionType
-import kotlin.time.Duration
 
-class BanCommand : SlashCommandExtender {
+class KickCommand : SlashCommandExtender {
     override fun onSlashCommand(event: SlashCommand) {
-        val user: User =
-            event.getOption("user")?.asUser ?: throw IllegalArgumentException("User is null")
+        val user: Member? = event.getOption("user")?.asMember
 
         val reason: String? = event.getOption("reason")?.asString
 
@@ -47,26 +45,31 @@ class BanCommand : SlashCommandExtender {
             return
         }
 
-        if (!event.member!!.hasPermission(GuildPermission.BAN_MEMBERS)) {
-            event.reply("You don't have permission to ban members").get()
+        if (user == null) {
+            event.reply("User is null").get()
             return
         }
 
-        if (!guild.botAsMember.hasPermission(GuildPermission.BAN_MEMBERS)) {
-            event.reply("I don't have permission to ban members").get()
+        if (!event.member!!.hasPermission(GuildPermission.KICK_MEMBERS)) {
+            event.reply("You don't have permission to kick members").get()
             return
         }
 
-        guild.banUser(user, Duration.ZERO, reason).thenAccept {
-            event.reply("Banned ${user.name} for $reason").get()
+        if (!guild.botAsMember.hasPermission(GuildPermission.KICK_MEMBERS)) {
+            event.reply("I don't have permission to kick members").get()
+            return
+        }
+
+        guild.kickMember(user, reason).thenAccept {
+            event.reply("Kicked ${user.name} for $reason").get()
         }
     }
 
     override fun build(): SlashCommandFinaliser {
-        return SlashCommandBuilder("ban", "Used to ban a user", guildOnlyCommand = true)
-            .addOption(SlashOption("user", "The user to ban", SlashOptionType.USER, true))
+        return SlashCommandBuilder("kick", "Used to kick a user", guildOnlyCommand = true)
+            .addOption(SlashOption("user", "The user to kick", SlashOptionType.USER, true))
             .addOption(
-                SlashOption("reason", "The reason for the ban", SlashOptionType.STRING, true))
+                SlashOption("reason", "The reason for the kick", SlashOptionType.STRING, true))
             .build()
     }
 }

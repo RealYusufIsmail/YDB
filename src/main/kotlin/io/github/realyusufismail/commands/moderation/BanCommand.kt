@@ -49,7 +49,7 @@ class BanCommand : SlashCommandExtender {
         return SlashCommandBuilder("ban", "Used to ban a user", guildOnlyCommand = true)
             .addOption(SlashOption("user", "The user to ban", SlashOptionType.USER, true))
             .addOption(
-                SlashOption("reason", "The reason for the ban", SlashOptionType.STRING, false))
+                SlashOption("reason", "The reason for the ban", SlashOptionType.STRING, true))
             .build()
     }
 }

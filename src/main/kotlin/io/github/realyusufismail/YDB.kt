@@ -49,5 +49,5 @@ fun main() {
 
     ydwk.on<ReadyEvent> { logger.info("Logged in as ${it.ydwk.bot?.name}") }
 
-    ydwk.addEvent(SlashCommandReg(ydwk))
+    ydwk.waitForReady.addEvent(SlashCommandReg(ydwk))
 }

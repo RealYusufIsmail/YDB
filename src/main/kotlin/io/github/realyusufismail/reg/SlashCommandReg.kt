@@ -20,6 +20,7 @@ package io.github.realyusufismail.reg
 
 import io.github.realyusufismail.backend.extension.SlashCommandExtender
 import io.github.realyusufismail.backend.handler.SlashHandler
+import io.github.realyusufismail.commands.TestCommand
 import io.github.realyusufismail.commands.UptimeCommand
 import io.github.realyusufismail.commands.moderation.BanCommand
 import io.github.realyusufismail.commands.moderation.KickCommand
@@ -33,6 +34,7 @@ class SlashCommandReg(ydwk: YDWK) : SlashHandler(ydwk) {
         slashList.add(UptimeCommand())
         slashList.add(BanCommand())
         slashList.add(KickCommand())
+        slashList.add(TestCommand())
 
         registerSlashCommands(slashList)
     }

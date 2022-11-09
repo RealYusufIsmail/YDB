@@ -36,32 +36,32 @@ class KickCommand : SlashCommandExtender {
         val guild = event.guild
 
         if (guild == null) {
-            event.reply("This command can only be used in a guild").get()
+            event.reply("This command can only be used in a guild").isEphemeral(true).reply()
             return
         }
 
         if (reason == null) {
-            event.reply("Please provide a reason").get()
+            event.reply("Please provide a reason").isEphemeral(true).reply()
             return
         }
 
         if (user == null) {
-            event.reply("User is null").get()
+            event.reply("User is null").isEphemeral(true).reply()
             return
         }
 
         if (!event.member!!.hasPermission(GuildPermission.KICK_MEMBERS)) {
-            event.reply("You don't have permission to kick members").get()
+            event.reply("You don't have permission to kick members").isEphemeral(true).reply()
             return
         }
 
         if (!guild.botAsMember.hasPermission(GuildPermission.KICK_MEMBERS)) {
-            event.reply("I don't have permission to kick members").get()
+            event.reply("I don't have permission to kick members").isEphemeral(true).reply()
             return
         }
 
         guild.kickMember(user, reason).thenAccept {
-            event.reply("Kicked ${user.name} for $reason").get()
+            event.reply("Kicked ${user.name} for $reason").reply()
         }
     }
 

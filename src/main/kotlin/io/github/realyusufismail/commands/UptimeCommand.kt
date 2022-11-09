@@ -25,7 +25,7 @@ import io.github.ydwk.ydwk.interaction.application.SlashCommand
 
 class UptimeCommand : SlashCommandExtender {
     override fun onSlashCommand(event: SlashCommand) {
-        event.reply("The uptime is ${event.ydwk.uptime}ms")
+        event.reply("The uptime is ${event.ydwk.uptime}ms").reply()
     }
 
     override fun build(): SlashCommandFinaliser {

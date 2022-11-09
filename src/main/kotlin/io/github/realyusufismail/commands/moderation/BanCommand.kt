@@ -38,27 +38,27 @@ class BanCommand : SlashCommandExtender {
         val guild = event.guild
 
         if (guild == null) {
-            event.reply("This command can only be used in a guild").get()
+            event.reply("This command can only be used in a guild").isEphemeral(true).reply()
             return
         }
 
         if (reason == null) {
-            event.reply("Please provide a reason").get()
+            event.reply("Please provide a reason").isEphemeral(true).reply()
             return
         }
 
         if (!event.member!!.hasPermission(GuildPermission.BAN_MEMBERS)) {
-            event.reply("You don't have permission to ban members").get()
+            event.reply("You don't have permission to ban members").isEphemeral(true).reply()
             return
         }
 
         if (!guild.botAsMember.hasPermission(GuildPermission.BAN_MEMBERS)) {
-            event.reply("I don't have permission to ban members").get()
+            event.reply("I don't have permission to ban members").isEphemeral(true).reply()
             return
         }
 
         guild.banUser(user, Duration.ZERO, reason).thenAccept {
-            event.reply("Banned ${user.name} for $reason").get()
+            event.reply("Banned ${user.name} for $reason").isEphemeral(true).reply()
         }
     }
 
